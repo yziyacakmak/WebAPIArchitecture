@@ -1,13 +1,16 @@
 ﻿using System.Net;
+using System.Text.Json.Serialization;
 
 namespace App.Services;
+
 public class ServiceResult<T>
 {
     public T? Data { get; set; }
     public List<string>? ErrorMesage { get; set; }
-    public bool IsSuccess => ErrorMesage == null || ErrorMesage.Count == 0;
-    public bool IsFail => !IsSuccess;
+    [JsonIgnore] public bool IsSuccess => ErrorMesage == null || ErrorMesage.Count == 0;
+    [JsonIgnore] public bool IsFail => !IsSuccess;
     public HttpStatusCode Status { get; set; }
+
     //static factory method
     public static ServiceResult<T> Success(T data, HttpStatusCode status = HttpStatusCode.OK)
     {
@@ -42,7 +45,9 @@ public class ServiceResult
     public List<string>? ErrorMesage { get; set; }
     public bool IsSuccess => ErrorMesage == null || ErrorMesage.Count == 0;
     public bool IsFail => !IsSuccess;
+
     public HttpStatusCode Status { get; set; }
+
     //static factory method
     public static ServiceResult Success(HttpStatusCode status = HttpStatusCode.OK)
     {
@@ -70,5 +75,3 @@ public class ServiceResult
         };
     }
 }
-
-
