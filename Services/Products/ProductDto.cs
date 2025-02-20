@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 
 namespace App.Services.Products
 {
-    public interface IProductService
-    {
-        Task<ServiceResult<List<ProductDto>>> GetTopPriceProductsAsync(int count);
-    }
+    public record ProductDto(int Id, string Name, decimal Price,int Stock);
+
 }
