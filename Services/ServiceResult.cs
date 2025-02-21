@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace App.Services;
 
@@ -9,7 +10,8 @@ public class ServiceResult<T>
     public List<string>? ErrorMesage { get; set; }
     [JsonIgnore] public bool IsSuccess => ErrorMesage == null || ErrorMesage.Count == 0;
     [JsonIgnore] public bool IsFail => !IsSuccess;
-    public HttpStatusCode Status { get; set; }
+    [JsonIgnore] public HttpStatusCode Status { get; set; }
+    [JsonIgnore] public string? UrlAsCreated { get; set; }
 
     //static factory method
     public static ServiceResult<T> Success(T data, HttpStatusCode status = HttpStatusCode.OK)
@@ -20,7 +22,15 @@ public class ServiceResult<T>
             Status = status
         };
     }
-
+    public static ServiceResult<T> SuccessAsCreated(T data, string urlAsCreated)
+    {
+        return new ServiceResult<T>()
+        {
+            Data = data,
+            Status = HttpStatusCode.Created,
+            UrlAsCreated = urlAsCreated
+        };
+    }
     public static ServiceResult<T> Fail(List<string> errorMessages, HttpStatusCode status = HttpStatusCode.BadRequest)
     {
         return new ServiceResult<T>()
