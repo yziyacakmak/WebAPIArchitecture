@@ -49,6 +49,14 @@ namespace App.Services.Products
 
         public async Task<ServiceResult<CreateProductResponse>> CreateAsync(CreateProductRequest request)
         {
+            var anyProduct = await productRepository.GetAll()
+                .AnyAsync(p => p.Name == request.Name);
+
+            if(anyProduct)
+            {
+                return ServiceResult<CreateProductResponse>.Fail("Product name must be unique");
+            }
+
             var product = new Product()
             {
                 Name = request.Name,
