@@ -16,6 +16,7 @@ namespace App.Services.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             return services;
         }
     }
