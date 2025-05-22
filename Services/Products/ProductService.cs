@@ -18,8 +18,7 @@ namespace App.Services.Products
 
 
             var products = await productRepository.GetTopPriceProductsAsync(count);
-            var productsAsDto = products.Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Stock))
-                .ToList();
+            var productsAsDto = mapper.Map<List<ProductDto>>(products);
 
             return ServiceResult<List<ProductDto>>.Success((productsAsDto));
         }
@@ -62,12 +61,7 @@ namespace App.Services.Products
                 return ServiceResult<CreateProductResponse>.Fail("Product name must be unique");
             }
 
-            var product = new Product()
-            {
-                Name = request.Name,
-                Price = request.Price,
-                Stock = request.Stock
-            };
+            var product = mapper.Map<Product>(request);
             await productRepository.AddAsync(product);
             await unitOfWork.SaveChangesAsync();
             return ServiceResult<CreateProductResponse>.SuccessAsCreated(new CreateProductResponse(product.Id),
@@ -92,9 +86,7 @@ namespace App.Services.Products
                 return ServiceResult.Fail("Product name must be unique");
             }
 
-            product.Name = request.Name;
-            product.Price = request.Price;
-            product.Stock = request.Stock;
+            product=mapper.Map(request,product);
 
             productRepository.Update(product);
             await unitOfWork.SaveChangesAsync();
