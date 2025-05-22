@@ -1,4 +1,6 @@
-﻿namespace App.Repositories.Products
+﻿using App.Repositories.Categories;
+
+namespace App.Repositories.Products
 {
     public class Product
     {
