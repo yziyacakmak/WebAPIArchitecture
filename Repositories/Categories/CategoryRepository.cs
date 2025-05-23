@@ -13,7 +13,7 @@ namespace App.Repositories.Categories
         {
             return context.Categories.Include(x=>x.Products).FirstOrDefaultAsync(x => x.Id == id);
         }
-        public IQueryable<Category> GetCategoryByProductsAsync()
+        public IQueryable<Category> GetCategoryWithProducts()
         {
             return context.Categories.Include(x => x.Products).AsQueryable();
         }

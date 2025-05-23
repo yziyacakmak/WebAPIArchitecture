@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App.Repositories.Products;
-using App.Services.Products;
 using App.Services.Products.Create;
 using App.Services.Products.Update;
 using AutoMapper;
 
-namespace App.Services.Mapping
+namespace App.Services.Products
 {
-    internal class MappingProfile : Profile
+    public class ProductMappingProfile : Profile
     {
-        public MappingProfile()
+        public ProductMappingProfile()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<CreateProductRequest, Product>().ForMember(dest => dest.Name,
