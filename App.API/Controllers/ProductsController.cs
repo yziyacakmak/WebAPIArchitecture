@@ -1,5 +1,6 @@
 using System.Net;
 using App.Repositories.Products;
+using App.Services.Filters;
 using App.Services.Products;
 using App.Services.Products.Create;
 using App.Services.Products.Update;
@@ -20,13 +21,16 @@ public class ProductsController(IProductService productService) : CustomBaseCont
 
     [HttpPost]
     public async Task<IActionResult> Create(CreateProductRequest request)=>CreateActionResult(await productService.CreateAsync(request));
-    
-    [HttpPut]
+
+    [ServiceFilter(typeof(NotFoundFilter<Product, int>))]
+    [HttpPut("{id:int}")]
     public async Task<IActionResult> Update(int id,UpdateProductRequest request)=>CreateActionResult(await productService.UpdateAsync(id,request));
 
     [HttpPatch("stock")]
     public async Task<IActionResult> UpdateStock(UpdateProductStockRequest request) => CreateActionResult(await productService.UpdateStock(request));
 
+
+    [ServiceFilter(typeof(NotFoundFilter<Product,int>))] 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id) => CreateActionResult(await productService.DeleteAsync(id));
 }

@@ -73,22 +73,17 @@ namespace App.Services.Products
 
             // fast fail 
             // guard clauses
-            var product = await productRepository.GetByIdAsync(id);
-            if (product is null)
-            {
-                return ServiceResult.Fail("Product not found", HttpStatusCode.NotFound);
-            }
-
-            var isProductNameExist = await productRepository.GetAll().AnyAsync(p => p.Name == request.Name && p.Id!=product.Id);
+            var isProductNameExist = await productRepository.GetAll().AnyAsync(p => p.Name == request.Name && p.Id!=id);
 
             if (isProductNameExist)
             {
                 return ServiceResult.Fail("Product name must be unique");
             }
 
-            product=mapper.Map(request,product);
+            var product=mapper.Map<Product>(request);
+            product.Id = id;
 
-            productRepository.Update(product);
+            productRepository.Update(product!);
             await unitOfWork.SaveChangesAsync();
 
             return ServiceResult.Success(HttpStatusCode.NoContent);
@@ -114,13 +109,7 @@ namespace App.Services.Products
         public async Task<ServiceResult> DeleteAsync(int id)
         {
             var product = await productRepository.GetByIdAsync(id);
-
-            if (product is null)
-            {
-                return ServiceResult.Fail("Product not found", HttpStatusCode.NotFound);
-            }
-
-            productRepository.Delete(product);
+            productRepository.Delete(product!);
             await unitOfWork.SaveChangesAsync();
             return ServiceResult.Success(HttpStatusCode.NoContent);
         }

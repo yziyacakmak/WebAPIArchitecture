@@ -52,8 +52,8 @@ public class ServiceResult<T>
 
 public class ServiceResult
 {
-    public List<string>? ErrorMesage { get; set; }
-    public bool IsSuccess => ErrorMesage == null || ErrorMesage.Count == 0;
+    public List<string>? ErrorMessage { get; set; }
+    public bool IsSuccess => ErrorMessage == null || ErrorMessage.Count == 0;
     public bool IsFail => !IsSuccess;
 
     public HttpStatusCode Status { get; set; }
@@ -71,7 +71,7 @@ public class ServiceResult
     {
         return new ServiceResult()
         {
-            ErrorMesage = errorMessages,
+            ErrorMessage = errorMessages,
             Status = status
         };
     }
@@ -80,7 +80,7 @@ public class ServiceResult
     {
         return new ServiceResult()
         {
-            ErrorMesage = new List<string>() { errorMessage },
+            ErrorMessage = new List<string>() { errorMessage },
             Status = status
         };
     }
