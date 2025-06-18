@@ -40,7 +40,7 @@ public class CategoryService(ICategoryRepository categoryRepository, IUnitOfWork
 
     public async Task<ServiceResult<List<CategoryDtoWithProducts>>> GetCategoryWithProductsAsync()
     {
-        var categories = await categoryRepository.GetCategoryWithProducts();
+        var categories = await categoryRepository.GetCategoryWithProductsAsync();
 
         var categoriesAsDto = mapper.Map<List<CategoryDtoWithProducts>>(categories);
 
