@@ -1,1 +1,1 @@
- N Layer Architecture course application
+ N Layer vs Clean Architecture
