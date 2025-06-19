@@ -1,3 +1,3 @@
 ﻿namespace App.Domain.Events;
 
-public record ProductAddEvent(int Id, string Name, decimal Price) : IEvent;
+public record ProductAddEvent(int Id, string Name, decimal Price) : IEventOrMessage;
